@@ -1,7 +1,6 @@
-manim==0.18.1
-manimpango==0.5.0
-pycairo==1.26.0
+manim
 requests
 streamlit
 python-dotenv
 google-generativeai
+
