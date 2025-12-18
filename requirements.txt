@@ -1,0 +1,5 @@
+manim
+requests
+streamlit
+python-dotenv
+google-generativeai
