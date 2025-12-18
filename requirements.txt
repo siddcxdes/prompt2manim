@@ -1,4 +1,6 @@
 manim
+matplotlib
+pillow
 requests
 streamlit
 python-dotenv
