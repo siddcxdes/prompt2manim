@@ -2,7 +2,6 @@ manim
 matplotlib
 pillow
 requests
-streamlit
 python-dotenv
-google-generativeai
-
+fastapi
+uvicorn[standard]

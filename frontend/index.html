@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt2Manim</title>
+    <meta name="description" content="Turn text prompts into mathematical animations powered by Manim">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <!-- top nav bar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <span class="logo-mark"></span>
+            <span class="logo-text">prompt2manim</span>
+        </div>
+        <div class="nav-right">
+            <span class="status-dot" id="statusDot"></span>
+            <span class="status-text" id="statusText">Ready</span>
+        </div>
+    </nav>
+
+    <!-- main content -->
+    <main class="container">
+
+        <!-- left side: input -->
+        <section class="panel input-panel">
+            <div class="panel-header">
+                <h2>Describe your animation</h2>
+                <p class="panel-sub">Plain English in, math animation out.</p>
+            </div>
+
+            <div class="input-area">
+                <textarea
+                    id="promptInput"
+                    placeholder="e.g. Show how the Pythagorean theorem works with a right triangle and the equation..."
+                    rows="5"
+                ></textarea>
+
+                <div class="suggestions">
+                    <span class="suggestion-label">Try:</span>
+                    <button class="chip" onclick="useExample('Show a sine wave graph with the equation y = sin(x)')">Sine wave</button>
+                    <button class="chip" onclick="useExample('Visualize the Pythagorean theorem with a triangle and equation')">Pythagorean theorem</button>
+                    <button class="chip" onclick="useExample('Show the quadratic formula and plot x squared')">Quadratic</button>
+                    <button class="chip" onclick="useExample('Draw a circle and show its area formula A = pi r squared')">Circle area</button>
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="quality-select">
+                    <label for="qualitySelect">Quality</label>
+                    <select id="qualitySelect">
+                        <option value="low">Draft (480p, fast)</option>
+                        <option value="medium" selected>Standard (720p)</option>
+                        <option value="high">High (1080p, slow)</option>
+                    </select>
+                </div>
+                <button class="btn-generate" id="generateBtn" onclick="handleGenerate()">
+                    Generate
+                </button>
+            </div>
+
+            <!-- error message -->
+            <div class="error-box" id="errorBox" style="display:none;">
+                <p id="errorText"></p>
+            </div>
+        </section>
+
+        <!-- right side: output -->
+        <section class="panel output-panel">
+
+            <!-- empty state -->
+            <div class="empty-state" id="emptyState">
+                <div class="empty-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                        <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                    </svg>
+                </div>
+                <h3>No animation yet</h3>
+                <p>Describe what you want to see on the left, and the generated animation plan will appear here.</p>
+            </div>
+
+            <!-- loading state -->
+            <div class="loading-state" id="loadingState" style="display:none;">
+                <div class="spinner"></div>
+                <p id="loadingText">Generating animation plan...</p>
+            </div>
+
+            <!-- plan preview -->
+            <div class="plan-preview" id="planPreview" style="display:none;">
+                <div class="plan-header">
+                    <h2>Animation Plan</h2>
+                    <div class="plan-stats" id="planStats"></div>
+                </div>
+
+                <div class="steps-list" id="stepsList"></div>
+
+                <button class="btn-render" id="renderBtn" onclick="handleRender()">
+                    Render Video
+                </button>
+            </div>
+
+            <!-- video player -->
+            <div class="video-section" id="videoSection" style="display:none;">
+                <div class="video-wrapper">
+                    <video id="videoPlayer" controls></video>
+                </div>
+                <div class="video-actions">
+                    <a class="btn-download" id="downloadBtn" download>Download MP4</a>
+                    <button class="btn-new" onclick="resetAll()">New Animation</button>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
